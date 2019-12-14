@@ -158,10 +158,7 @@
     }
 
     _addRow(repLog) {
-      const tplText = rowTemplate;
-      const tpl = _.template(tplText);
-
-      const html = tpl(repLog);
+      const html = rowTemplate(repLog);
       this.$wrapper.find('tbody').append($.parseHTML(html));
 
       this.updateTotalWeightLifted();
@@ -201,7 +198,7 @@
     }
   }
 
-  const rowTemplate = `
+  const rowTemplate = (repLog) => `
     <tr data-weight="${repLog.totalWeightLifted}">
       <td>${repLog.itemLabel}</td>
       <td>${repLog.reps}</td>
