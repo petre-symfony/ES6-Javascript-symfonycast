@@ -1,28 +1,31 @@
 'use strict';
 
 (function(window, $, Routing, swal) {
-  window.RepLogApp = function ($wrapper) {
-    this.$wrapper = $wrapper;
-    this.helper = new Helper(this.$wrapper);
+  class ReplogApp {
+    constructor($wrapper) {
+      this.$wrapper = $wrapper;
+      this.helper = new Helper(this.$wrapper);
 
-    this.loadRepLogs();
+      this.loadRepLogs();
 
-    this.$wrapper.on(
-      'click',
-      '.js-delete-rep-log',
-      this.handleRepLogDelete.bind(this)
-    );
-    this.$wrapper.on(
-      'click',
-      'tbody tr',
-      this.handleRowClick.bind(this)
-    );
-    this.$wrapper.on(
-      'submit',
-      this._selectors.newRepForm,
-      this.handleNewFormSubmit.bind(this)
-    );
-  };
+      this.$wrapper.on(
+        'click',
+        '.js-delete-rep-log',
+        this.handleRepLogDelete.bind(this)
+      );
+      this.$wrapper.on(
+        'click',
+        'tbody tr',
+        this.handleRowClick.bind(this)
+      );
+      this.$wrapper.on(
+        'submit',
+        this._selectors.newRepForm,
+        this.handleNewFormSubmit.bind(this)
+      );
+    };
+  }
+
 
   $.extend(window.RepLogApp.prototype, {
     _selectors: {
@@ -169,10 +172,11 @@
   /**
    * A "private" object
    */
-  const Helper = function ($wrapper) {
-    this.$wrapper = $wrapper;
-  };
-  $.extend(Helper.prototype, {
+  class Helper {
+    constructor($wrapper) {
+      this.$wrapper = $wrapper;
+    }
+
     calculateTotalWeight() {
       let totalWeight = 0;
       this.$wrapper.find('tbody tr').each((index, element) => {
@@ -180,7 +184,7 @@
       });
 
       return totalWeight;
-    },
+    }
 
     getTotalWeightString(maxWeight = 500) {
       let weight = this.calculateTotalWeight();
@@ -191,5 +195,5 @@
 
       return weight + ' lbs';
     }
-  });
+  }
 })(window, jQuery, Routing, swal);
