@@ -1,3 +1,7 @@
+/*
+	-----------------------------------
+	Class Inheritance and super Calls
+ */
 class AGreatClass {
 	constructor(greatNumber) {
 		this.greatNumber = greatNumber;
@@ -43,3 +47,11 @@ copyOfGreatThings.push('summer');
 printThreeThings(...yummyThings);
 console.log(greatThings);
 console.log(copyOfGreatThings);
+
+/*
+	-----------------------------------
+	Template Strings
+ */
+const favoriteFood = 'gelato';
+const iLoveFood = 'The year is '+(new Date()).getFullYear()+' and my favorite food is '+favoriteFood;
+console.log(iLoveFood);
