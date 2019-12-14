@@ -54,9 +54,7 @@
         text: 'What? Did you not actually lift this?',
         showCancelButton: true,
         showLoaderOnConfirm: true,
-        preConfirm: () => {
-            return this._deleteRepLog($link);
-        }
+        preConfirm: () => this._deleteRepLog($link)
       }).catch((arg) => {
         // canceling is cool!
       });
