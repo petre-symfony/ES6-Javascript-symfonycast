@@ -103,8 +103,9 @@
 
     _saveRepLog: function(data) {
       return new Promise((resolve, reject) => {
+        const url = Routing.generate('rep_log_new');
         $.ajax({
-          url: Routing.generate('rep_log_new'),
+          url: url,
           method: 'POST',
           data: JSON.stringify(data)
         }).then((data, textStatus, jqXHR) => {
