@@ -25,8 +25,10 @@
       );
     }
 
-    _selectors: {
-      newRepForm: '.js-new-rep-log-form'
+    _getSelectors() {
+      return {
+        newRepForm: '.js-new-rep-log-form'
+      }
     }
   }
 
