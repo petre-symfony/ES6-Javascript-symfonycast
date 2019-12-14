@@ -8,7 +8,10 @@ class AGreatClass {
 	}
 }
 
-const aGreatObject = new AGreatClass(42);
+class AnotherGreatClass extends AGreatClass{
+}
+
+const aGreatObject = new AnotherGreatClass(42);
 console.log(
 	aGreatObject.returnGreatThings()
 );
