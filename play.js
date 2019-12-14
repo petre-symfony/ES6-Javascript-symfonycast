@@ -61,6 +61,7 @@ console.log(iLoveFood);
 	Map and WeakMap
  */
 
+/*
 let foods = new Map();
 
 foods.set('italian', 'gelato');
@@ -76,5 +77,20 @@ console.log(
 	foods.get(southernUsStates),
 	foods.size
 );
+*/
 
+let foods = new WeakMap();
 
+foods.set('italian', 'gelato');
+foods.set('mexican', 'tortas');
+foods.set('canadian', 'poutine');
+
+let southernUsStates = ['Tennessee', 'Kentucky', 'Texas'];
+foods.set(southernUsStates, 'hot chicken');
+
+console.log(
+	foods.get('italian'),
+	foods.has('french'),
+	foods.get(southernUsStates),
+	foods.size
+);
