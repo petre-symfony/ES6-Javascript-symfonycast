@@ -25,7 +25,7 @@
       );
     }
 
-    _getSelectors() {
+    get _selectors() {
       return {
         newRepForm: '.js-new-rep-log-form'
       }
