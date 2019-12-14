@@ -1,3 +1,4 @@
+var aGreatNumber;
 console.log(aGreatNumber);
 var aGreatNumber = 10;
 
