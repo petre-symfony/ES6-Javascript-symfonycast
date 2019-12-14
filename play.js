@@ -73,7 +73,8 @@ foods.set(southernUsStates, 'hot chicken');
 console.log(
 	foods.get('italian'),
 	foods.has('french'),
-	foods.get(southernUsStates)
+	foods.get(southernUsStates),
+	foods.size
 );
 
 
