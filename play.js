@@ -55,3 +55,15 @@ console.log(copyOfGreatThings);
 const favoriteFood = 'gelato';
 const iLoveFood = `The year is ${(new Date()).getFullYear()} and my favorite food is ${favoriteFood}`;
 console.log(iLoveFood);
+
+/*
+	-----------------------------------
+	Map and WeakMap
+ */
+
+let foods = {};
+foods.italian = 'gelato';
+foods.mexican = 'tortas';
+foods.canadian = 'poutine';
+
+console.log(foods.italian);
