@@ -36,4 +36,7 @@ let printThreeThings = function(thing1, thing2, thing3) {
 };
 
 let yummyThings = ['pizza', 'gelato', 'sushi', 'cheeseburger'];
+let greatThings = ['swimming', 'sunsets', ...yummyThings, 'New Orleans'];
+
 printThreeThings(...yummyThings);
+console.log(greatThings);
