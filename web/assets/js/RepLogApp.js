@@ -41,7 +41,7 @@
 
     updateTotalWeightLifted() {
       this.$wrapper.find('.js-total-weight').html(
-        this.helper.getTotalWeightString()
+        this.helper.getTotalWeightString(500)
       );
     },
 
@@ -182,8 +182,14 @@
       return totalWeight;
     },
 
-    getTotalWeightString() {
-      return this.calculateTotalWeight() + ' lbs';
+    getTotalWeightString(maxWeight) {
+      let weight = this.calculateTotalWeight();
+
+      if (weight > maxWeight) {
+        weight = maxWeight + '+';
+      }
+
+      return weight + ' lbs';
     }
   });
 })(window, jQuery, Routing, swal);
