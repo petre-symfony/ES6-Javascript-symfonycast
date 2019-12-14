@@ -26,3 +26,14 @@ const aGreatObject = new AnotherGreatClass(42, 'adventure');
 console.log(
 	aGreatObject.returnGreatThings()
 );
+
+/*
+ ---------------------------------------------------------
+ Spread Operator
+ */
+let printThreeThings = function(thing1, thing2, thing3) {
+	console.log(thing1, thing2, thing3);
+};
+
+let yummyThings = ['pizza', 'gelato', 'sushi'];
+printThreeThings(...yummyThings);
