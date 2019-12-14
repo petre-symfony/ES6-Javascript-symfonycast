@@ -128,9 +128,9 @@
       this._removeFormErrors();
       var $form = this.$wrapper.find(this._selectors.newRepForm);
 
-      $form.find(':input').each(() => {
-        var fieldName = $(this).attr('name');
-        var $wrapper = $(this).closest('.form-group');
+      $form.find(':input').each((index, element) => {
+        var fieldName = $(element).attr('name');
+        var $wrapper = $(element).closest('.form-group');
         if (!errorData[fieldName]) {
           // no error!
           return;
@@ -176,8 +176,8 @@
   $.extend(Helper.prototype, {
     calculateTotalWeight: function() {
       var totalWeight = 0;
-      this.$wrapper.find('tbody tr').each(() => {
-        totalWeight += $(this).data('weight');
+      this.$wrapper.find('tbody tr').each((index, element) => {
+        totalWeight += $(element).data('weight');
       });
 
       return totalWeight;
