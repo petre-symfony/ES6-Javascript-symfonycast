@@ -1,7 +1,7 @@
 'use strict';
 
 (function(window, $, Routing, swal) {
-  class ReplogApp {
+  class RepLogApp {
     constructor($wrapper) {
       this.$wrapper = $wrapper;
       this.helper = new Helper(this.$wrapper);
@@ -195,4 +195,6 @@
       return weight + ' lbs';
     }
   }
+
+  window.RepLogApp = RepLogApp;
 })(window, jQuery, Routing, swal);
