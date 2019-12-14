@@ -9,6 +9,9 @@ class AGreatClass {
 }
 
 class AnotherGreatClass extends AGreatClass{
+	returnGreatThings() {
+		return 'adventure';
+	}
 }
 
 const aGreatObject = new AnotherGreatClass(42);
