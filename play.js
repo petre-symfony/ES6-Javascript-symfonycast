@@ -61,9 +61,10 @@ console.log(iLoveFood);
 	Map and WeakMap
  */
 
-let foods = {};
-foods.italian = 'gelato';
-foods.mexican = 'tortas';
-foods.canadian = 'poutine';
+let foods = new Map();
 
-console.log(foods.italian);
+foods.set('italian', 'gelato');
+foods.set('mexican', 'tortas');
+foods.set('canadian', 'poutine');
+
+console.log(foods.get('italian'));
