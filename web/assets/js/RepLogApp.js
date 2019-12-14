@@ -1,7 +1,7 @@
 'use strict';
 
 (function(window, $, Routing, swal) {
-  window.RepLogApp = function ($wrapper) {
+  window.RepLogApp = ($wrapper) => {
     this.$wrapper = $wrapper;
     this.helper = new Helper(this.$wrapper);
 
@@ -29,7 +29,7 @@
       newRepForm: '.js-new-rep-log-form'
     },
 
-    loadRepLogs: function() {
+    loadRepLogs: () => {
       $.ajax({
         url: Routing.generate('rep_log_list'),
       }).then(data => {
@@ -54,9 +54,8 @@
         text: 'What? Did you not actually lift this?',
         showCancelButton: true,
         showLoaderOnConfirm: true,
-        preConfirm: () => {
-            return this._deleteRepLog($link);
-        }
+        preConfirm: () => this._deleteRepLog($link)
+
       }).catch((arg) => {
         // canceling is cool!
       });
@@ -170,7 +169,7 @@
   /**
    * A "private" object
    */
-  var Helper = function ($wrapper) {
+  var Helper = ($wrapper) => {
     this.$wrapper = $wrapper;
   };
   $.extend(Helper.prototype, {
