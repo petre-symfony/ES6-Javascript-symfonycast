@@ -30,13 +30,6 @@
         newRepForm: '.js-new-rep-log-form'
       }
     }
-  }
-
-
-  $.extend(window.RepLogApp.prototype, {
-    _selectors: {
-      newRepForm: '.js-new-rep-log-form'
-    },
 
     loadRepLogs() {
       $.ajax({
@@ -46,13 +39,13 @@
           this._addRow(repLog);
         });
       })
-    },
+    }
 
     updateTotalWeightLifted() {
       this.$wrapper.find('.js-total-weight').html(
         this.helper.getTotalWeightString()
       );
-    },
+    }
 
     handleRepLogDelete(e) {
       e.preventDefault();
@@ -67,7 +60,7 @@
       }).catch((arg) => {
         // canceling is cool!
       });
-    },
+    }
 
     _deleteRepLog($link) {
       $link.addClass('text-danger');
@@ -87,11 +80,11 @@
           this.updateTotalWeightLifted();
         });
       })
-    },
+    }
 
     handleRowClick() {
       console.log('row clicked!');
-    },
+    }
 
     handleNewFormSubmit(e) {
       e.preventDefault();
@@ -108,7 +101,7 @@
       }).catch((errorData) => {
         this._mapErrorsToForm(errorData.errors);
       });
-    },
+    }
 
     _saveRepLog(data) {
       return new Promise((resolve, reject) => {
@@ -130,7 +123,7 @@
           reject(errorData);
         });
       });
-    },
+    }
 
     _mapErrorsToForm(errorData) {
       this._removeFormErrors();
@@ -149,20 +142,20 @@
         $wrapper.append($error);
         $wrapper.addClass('has-error');
       });
-    },
+    }
 
     _removeFormErrors() {
       const $form = this.$wrapper.find(this._selectors.newRepForm);
       $form.find('.js-field-error').remove();
       $form.find('.form-group').removeClass('has-error');
-    },
+    }
 
     _clearForm() {
       this._removeFormErrors();
 
       const $form = this.$wrapper.find(this._selectors.newRepForm);
       $form[0].reset();
-    },
+    }
 
     _addRow(repLog) {
       const tplText = $('#js-rep-log-row-template').html();
@@ -173,7 +166,7 @@
 
       this.updateTotalWeightLifted();
     }
-  });
+  }
 
   /**
    * A "private" object
