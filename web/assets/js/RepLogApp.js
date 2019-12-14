@@ -23,7 +23,11 @@
         this._selectors.newRepForm,
         this.handleNewFormSubmit.bind(this)
       );
-    };
+    }
+
+    _selectors: {
+      newRepForm: '.js-new-rep-log-form'
+    }
   }
 
 
