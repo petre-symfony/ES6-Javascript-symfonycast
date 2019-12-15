@@ -79,6 +79,7 @@ console.log(
 );
 */
 
+/*
 let foods = new WeakMap();
 
 foods.set(['italian'], 'gelato');
@@ -95,3 +96,17 @@ console.log(
 	foods.get(southernUsStates),
 	foods.size
 );
+*/
+
+/*
+	-----------------------------------
+	Array, Set and ES2016
+ */
+
+let foods = [];
+
+foods.push('gelato');
+foods.push('tortas');
+foods.push('gelato');
+
+console.log(foods);
