@@ -7,7 +7,7 @@
     constructor($wrapper) {
       this.$wrapper = $wrapper;
       this.repLogs = [];
-			HelperInstance.set(this, new Helper(this.$wrapper));
+			HelperInstance.set(this, new Helper(this.repLogs));
 
       this.loadRepLogs();
 
@@ -80,6 +80,12 @@
         method: 'DELETE'
       }).then(() => {
         $row.fadeOut('normal', () => {
+          // we need to remove the repLog from this.repLogs
+          // the "key" is the index to this repLog on this.repLogs
+          this.repLogs.splice(
+            $row.data('key'),
+            1
+          );
           $row.remove();
           this.updateTotalWeightLifted();
         });
@@ -166,6 +172,9 @@
     _addRow(repLog) {
       this.repLogs.push(repLog);
       const html = rowTemplate(repLog);
+      const $row = $($.parseHTML(html));
+      // store the repLogs index
+      $row.data('key', this.repLogs.length - 1);
       this.$wrapper.find('tbody').append($.parseHTML(html));
 
       this.updateTotalWeightLifted();
@@ -176,13 +185,13 @@
    * A "private" object
    */
   class Helper {
-    constructor($wrapper) {
-      this.$wrapper = $wrapper;
+    constructor(repLogs) {
+      this.repLogs = repLogs;
     }
 
     calculateTotalWeight() {
       return Helper._calculateWeights(
-        this.$wrapper.find('tbody tr')
+        this.repLogs
       );
     }
 
@@ -196,10 +205,10 @@
       return weight + ' lbs';
     }
 
-    static _calculateWeights($elements) {
+    static _calculateWeights(repLogs) {
       let totalWeight = 0;
-      for (let element of $elements) {
-        totalWeight += $(element).data('weight');
+      for (let repLog of repLogs) {
+        totalWeight += repLog.totalWeightLifted;
       }
       return totalWeight;
     }
