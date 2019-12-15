@@ -103,10 +103,10 @@ console.log(
 	Array, Set and ES2016
  */
 
-let foods = [];
+let foods = new Set();
 
-foods.push('gelato');
-foods.push('tortas');
-foods.push('gelato');
+foods.add('gelato');
+foods.add('tortas');
+foods.add('gelato');
 
 console.log(foods);
