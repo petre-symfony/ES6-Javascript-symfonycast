@@ -1,7 +1,7 @@
 'use strict';
 
 (function(window, $, Routing, swal) {
-	let HelperInstance = new Map();
+	let HelperInstance = new WeakMap();
 
   class RepLogApp {
     constructor($wrapper) {
