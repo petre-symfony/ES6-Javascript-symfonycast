@@ -7,6 +7,7 @@
     constructor($wrapper) {
       this.$wrapper = $wrapper;
 			HelperInstance.set(this, new Helper(this.$wrapper));
+      return;
 
       this.loadRepLogs();
 
