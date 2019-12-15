@@ -7,7 +7,6 @@
     constructor($wrapper) {
       this.$wrapper = $wrapper;
 			HelperInstance.set(this, new Helper(this.$wrapper));
-      return;
 
       this.loadRepLogs();
 
@@ -226,14 +225,6 @@
       </td>
     </tr>
   `;
-
-  new RepLogApp($('body'));
-  new RepLogApp($('body'));
-  new RepLogApp($('body'));
-  new RepLogApp($('body'));
-
-  setTimeout(() => {
-    console.log(HelperInstance);
-  }, 5000);
+  
   window.RepLogApp = RepLogApp;
 })(window, jQuery, Routing, swal);
