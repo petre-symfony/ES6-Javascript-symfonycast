@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "git@github.com:petre-symfony/ES6-Javascript-symfonycast.git",
   "author": "petrero <petrero@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
 }
