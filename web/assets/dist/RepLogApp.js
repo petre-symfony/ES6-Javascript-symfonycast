@@ -1,10 +1,16 @@
 'use strict';
 
-(function (window, $, Routing, swal) {
-  let HelperInstance = new WeakMap();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  class RepLogApp {
-    constructor($wrapper) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+(function (window, $, Routing, swal) {
+  var HelperInstance = new WeakMap();
+
+  var RepLogApp = function () {
+    function RepLogApp($wrapper) {
+      _classCallCheck(this, RepLogApp);
+
       this.$wrapper = $wrapper;
       this.repLogs = [];
       HelperInstance.set(this, new Helper(this.repLogs));
@@ -16,180 +22,304 @@
       this.$wrapper.on('submit', RepLogApp._selectors.newRepForm, this.handleNewFormSubmit.bind(this));
     }
 
-    static get _selectors() {
-      return {
-        newRepForm: '.js-new-rep-log-form'
-      };
-    }
+    _createClass(RepLogApp, [{
+      key: 'loadRepLogs',
+      value: function loadRepLogs() {
+        var _this = this;
 
-    loadRepLogs() {
-      $.ajax({
-        url: Routing.generate('rep_log_list')
-      }).then(data => {
-        for (let repLog of data.items) {
-          this._addRow(repLog);
-        }
-        //console.log(this.repLogs, this.repLogs.includes(data.items[0]));
-      });
-    }
-
-    updateTotalWeightLifted() {
-      this.$wrapper.find('.js-total-weight').html(HelperInstance.get(this).getTotalWeightString());
-    }
-
-    handleRepLogDelete(e) {
-      e.preventDefault();
-
-      const $link = $(e.currentTarget);
-      swal({
-        title: 'Delete this log?',
-        text: 'What? Did you not actually lift this?',
-        showCancelButton: true,
-        showLoaderOnConfirm: true,
-        preConfirm: () => this._deleteRepLog($link)
-      }).catch(arg => {
-        // canceling is cool!
-      });
-    }
-
-    _deleteRepLog($link) {
-      $link.addClass('text-danger');
-      $link.find('.fa').removeClass('fa-trash').addClass('fa-spinner').addClass('fa-spin');
-
-      const deleteUrl = $link.data('url');
-      const $row = $link.closest('tr');
-      return $.ajax({
-        url: deleteUrl,
-        method: 'DELETE'
-      }).then(() => {
-        $row.fadeOut('normal', () => {
-          // we need to remove the repLog from this.repLogs
-          // the "key" is the index to this repLog on this.repLogs
-          this.repLogs.splice($row.data('key'), 1);
-          $row.remove();
-          this.updateTotalWeightLifted();
-        });
-      });
-    }
-
-    handleRowClick() {
-      console.log('row clicked!');
-    }
-
-    handleNewFormSubmit(e) {
-      e.preventDefault();
-
-      const $form = $(e.currentTarget);
-      const formData = {};
-
-      for (let fieldData of $form.serializeArray()) {
-        formData[fieldData.name] = fieldData.value;
-      }
-
-      this._saveRepLog(formData).then(data => {
-        this._clearForm();
-        this._addRow(data);
-      }).catch(errorData => {
-        this._mapErrorsToForm(errorData.errors);
-      });
-    }
-
-    _saveRepLog(data) {
-      return new Promise((resolve, reject) => {
-        const url = Routing.generate('rep_log_new');
         $.ajax({
-          url,
-          method: 'POST',
-          data: JSON.stringify(data)
-        }).then((data, textStatus, jqXHR) => {
-          $.ajax({
-            url: jqXHR.getResponseHeader('Location')
-          }).then(data => {
-            // we're finally done!
-            resolve(data);
-          });
-        }).catch(jqXHR => {
-          const errorData = JSON.parse(jqXHR.responseText);
+          url: Routing.generate('rep_log_list')
+        }).then(function (data) {
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
 
-          reject(errorData);
+          try {
+            for (var _iterator = data.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var repLog = _step.value;
+
+              _this._addRow(repLog);
+            }
+            //console.log(this.repLogs, this.repLogs.includes(data.items[0]));
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
         });
-      });
-    }
+      }
+    }, {
+      key: 'updateTotalWeightLifted',
+      value: function updateTotalWeightLifted() {
+        this.$wrapper.find('.js-total-weight').html(HelperInstance.get(this).getTotalWeightString());
+      }
+    }, {
+      key: 'handleRepLogDelete',
+      value: function handleRepLogDelete(e) {
+        var _this2 = this;
 
-    _mapErrorsToForm(errorData) {
-      this._removeFormErrors();
-      const $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
+        e.preventDefault();
 
-      for (let element of $form.find(':input')) {
-        const fieldName = $(element).attr('name');
-        const $wrapper = $(element).closest('.form-group');
-        if (!errorData[fieldName]) {
-          // no error!
-          return;
+        var $link = $(e.currentTarget);
+        swal({
+          title: 'Delete this log?',
+          text: 'What? Did you not actually lift this?',
+          showCancelButton: true,
+          showLoaderOnConfirm: true,
+          preConfirm: function preConfirm() {
+            return _this2._deleteRepLog($link);
+          }
+        }).catch(function (arg) {
+          // canceling is cool!
+        });
+      }
+    }, {
+      key: '_deleteRepLog',
+      value: function _deleteRepLog($link) {
+        var _this3 = this;
+
+        $link.addClass('text-danger');
+        $link.find('.fa').removeClass('fa-trash').addClass('fa-spinner').addClass('fa-spin');
+
+        var deleteUrl = $link.data('url');
+        var $row = $link.closest('tr');
+        return $.ajax({
+          url: deleteUrl,
+          method: 'DELETE'
+        }).then(function () {
+          $row.fadeOut('normal', function () {
+            // we need to remove the repLog from this.repLogs
+            // the "key" is the index to this repLog on this.repLogs
+            _this3.repLogs.splice($row.data('key'), 1);
+            $row.remove();
+            _this3.updateTotalWeightLifted();
+          });
+        });
+      }
+    }, {
+      key: 'handleRowClick',
+      value: function handleRowClick() {
+        console.log('row clicked!');
+      }
+    }, {
+      key: 'handleNewFormSubmit',
+      value: function handleNewFormSubmit(e) {
+        var _this4 = this;
+
+        e.preventDefault();
+
+        var $form = $(e.currentTarget);
+        var formData = {};
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = $form.serializeArray()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var fieldData = _step2.value;
+
+            formData[fieldData.name] = fieldData.value;
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
         }
 
-        const $error = $('<span class="js-field-error help-block"></span>');
-        $error.html(errorData[fieldName]);
-        $wrapper.append($error);
-        $wrapper.addClass('has-error');
+        this._saveRepLog(formData).then(function (data) {
+          _this4._clearForm();
+          _this4._addRow(data);
+        }).catch(function (errorData) {
+          _this4._mapErrorsToForm(errorData.errors);
+        });
       }
-    }
+    }, {
+      key: '_saveRepLog',
+      value: function _saveRepLog(data) {
+        return new Promise(function (resolve, reject) {
+          var url = Routing.generate('rep_log_new');
+          $.ajax({
+            url: url,
+            method: 'POST',
+            data: JSON.stringify(data)
+          }).then(function (data, textStatus, jqXHR) {
+            $.ajax({
+              url: jqXHR.getResponseHeader('Location')
+            }).then(function (data) {
+              // we're finally done!
+              resolve(data);
+            });
+          }).catch(function (jqXHR) {
+            var errorData = JSON.parse(jqXHR.responseText);
 
-    _removeFormErrors() {
-      const $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
-      $form.find('.js-field-error').remove();
-      $form.find('.form-group').removeClass('has-error');
-    }
+            reject(errorData);
+          });
+        });
+      }
+    }, {
+      key: '_mapErrorsToForm',
+      value: function _mapErrorsToForm(errorData) {
+        this._removeFormErrors();
+        var $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
 
-    _clearForm() {
-      this._removeFormErrors();
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
 
-      const $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
-      $form[0].reset();
-    }
+        try {
+          for (var _iterator3 = $form.find(':input')[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var element = _step3.value;
 
-    _addRow(repLog) {
-      this.repLogs.push(repLog);
-      const html = rowTemplate(repLog);
-      const $row = $($.parseHTML(html));
-      // store the repLogs index
-      $row.data('key', this.repLogs.length - 1);
-      this.$wrapper.find('tbody').append($.parseHTML(html));
+            var fieldName = $(element).attr('name');
+            var $wrapper = $(element).closest('.form-group');
+            if (!errorData[fieldName]) {
+              // no error!
+              return;
+            }
 
-      this.updateTotalWeightLifted();
-    }
-  }
+            var $error = $('<span class="js-field-error help-block"></span>');
+            $error.html(errorData[fieldName]);
+            $wrapper.append($error);
+            $wrapper.addClass('has-error');
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+      }
+    }, {
+      key: '_removeFormErrors',
+      value: function _removeFormErrors() {
+        var $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
+        $form.find('.js-field-error').remove();
+        $form.find('.form-group').removeClass('has-error');
+      }
+    }, {
+      key: '_clearForm',
+      value: function _clearForm() {
+        this._removeFormErrors();
+
+        var $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
+        $form[0].reset();
+      }
+    }, {
+      key: '_addRow',
+      value: function _addRow(repLog) {
+        this.repLogs.push(repLog);
+        var html = rowTemplate(repLog);
+        var $row = $($.parseHTML(html));
+        // store the repLogs index
+        $row.data('key', this.repLogs.length - 1);
+        this.$wrapper.find('tbody').append($.parseHTML(html));
+
+        this.updateTotalWeightLifted();
+      }
+    }], [{
+      key: '_selectors',
+      get: function get() {
+        return {
+          newRepForm: '.js-new-rep-log-form'
+        };
+      }
+    }]);
+
+    return RepLogApp;
+  }();
 
   /**
    * A "private" object
    */
-  class Helper {
-    constructor(repLogs) {
+
+
+  var Helper = function () {
+    function Helper(repLogs) {
+      _classCallCheck(this, Helper);
+
       this.repLogs = repLogs;
     }
 
-    calculateTotalWeight() {
-      return Helper._calculateWeights(this.repLogs);
-    }
-
-    getTotalWeightString(maxWeight = 500) {
-      let weight = this.calculateTotalWeight();
-
-      if (weight > maxWeight) {
-        weight = maxWeight + '+';
+    _createClass(Helper, [{
+      key: 'calculateTotalWeight',
+      value: function calculateTotalWeight() {
+        return Helper._calculateWeights(this.repLogs);
       }
+    }, {
+      key: 'getTotalWeightString',
+      value: function getTotalWeightString() {
+        var maxWeight = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 500;
 
-      return weight + ' lbs';
-    }
+        var weight = this.calculateTotalWeight();
 
-    static _calculateWeights(repLogs) {
-      let totalWeight = 0;
-      for (let repLog of repLogs) {
-        totalWeight += repLog.totalWeightLifted;
+        if (weight > maxWeight) {
+          weight = maxWeight + '+';
+        }
+
+        return weight + ' lbs';
       }
-      return totalWeight;
-    }
-  }
+    }], [{
+      key: '_calculateWeights',
+      value: function _calculateWeights(repLogs) {
+        var totalWeight = 0;
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+          for (var _iterator4 = repLogs[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var repLog = _step4.value;
+
+            totalWeight += repLog.totalWeightLifted;
+          }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+              _iterator4.return();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
+          }
+        }
+
+        return totalWeight;
+      }
+    }]);
+
+    return Helper;
+  }();
 
   /*
   function upper(template, ...expressions) {
@@ -199,21 +329,10 @@
   }
   */
 
-  const rowTemplate = repLog => /*upper*/`
-    <tr data-weight="${repLog.totalWeightLifted}">
-      <td>${repLog.itemLabel}</td>
-      <td>${repLog.reps}</td>
-      <td>${repLog.totalWeightLifted}</td>
-      <td>
-        <a href="#"
-            class="js-delete-rep-log"
-            data-url="${repLog.links._self}"
-        >
-          <span class="fa fa-trash"></span>
-        </a>
-      </td>
-    </tr>
-  `;
+  var rowTemplate = function rowTemplate(repLog) {
+    return (/*upper*/'\n    <tr data-weight="' + repLog.totalWeightLifted + '">\n      <td>' + repLog.itemLabel + '</td>\n      <td>' + repLog.reps + '</td>\n      <td>' + repLog.totalWeightLifted + '</td>\n      <td>\n        <a href="#"\n            class="js-delete-rep-log"\n            data-url="' + repLog.links._self + '"\n        >\n          <span class="fa fa-trash"></span>\n        </a>\n      </td>\n    </tr>\n  '
+    );
+  };
 
   window.RepLogApp = RepLogApp;
 })(window, jQuery, Routing, swal);
