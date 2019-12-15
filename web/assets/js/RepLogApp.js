@@ -225,6 +225,6 @@
       </td>
     </tr>
   `;
-  
+
   window.RepLogApp = RepLogApp;
 })(window, jQuery, Routing, swal);
